@@ -46,9 +46,9 @@ Diy_Part2_Base() {
 		[ -f "${Default_File}" ] && sed -i "s?iptables?#iptables?g" ${Default_File} > /dev/null 2>&1
 	fi
 	if [[ "${INCLUDE_AutoUpdate}" == "true" ]];then
-		ExtraPackages git lean luci-app-autoupdate-k3 https://github.com/lylus main
-		sed -i '/luci-app-autoupdate-k3/d' .config > /dev/null 2>&1
-		echo -e "\nCONFIG_PACKAGE_luci-app-autoupdate-k3=y" >> .config
+		ExtraPackages git lean luci-app-autoupdate-pi https://github.com/lylus main
+		sed -i '/luci-app-autoupdate-pi/d' .config > /dev/null 2>&1
+		echo -e "\nCONFIG_PACKAGE_luci-app-autoupdate-pi=y" >> .config
 		Replace_File Scripts/AutoUpdate.sh package/base-files/files/bin
 		AutoUpdate_Version=$(awk 'NR==6' package/base-files/files/bin/AutoUpdate.sh | awk -F '[="]+' '/Version/{print $2}')
 		[[ -z "${AutoUpdate_Version}" ]] && AutoUpdate_Version="Unknown"
@@ -71,8 +71,8 @@ Diy_Part2_Base() {
 Diy_Part3_Base() {
 	Diy_Core
 	GET_TARGET_INFO
-	Default_Firmware="openwrt-bcm53xx-generic-phicomm-k3-squashfs.trx"
-	AutoBuild_Firmware="AutoBuild-${TARGET_PROFILE}-${Openwrt_Version}.trx"
+	Default_Firmware="openwrt-bcm27xx-bcm2711-rpi-4-squashfs-sysupgrade.img.gz"
+	AutoBuild_Firmware="AutoBuild-${TARGET_PROFILE}-${Openwrt_Version}.img.gz"
 	AutoBuild_Detail="AutoBuild-${TARGET_PROFILE}-${Openwrt_Version}.detail"
 	Mkdir bin/Firmware
 	echo "Firmware: ${AutoBuild_Firmware}"
